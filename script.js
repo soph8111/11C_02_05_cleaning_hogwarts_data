@@ -42,7 +42,7 @@ function prepareObjects(jsonData) {
     // Create new object with cleaned data - and store that in the allStudents array
     const student = Object.create(Student);
     student.firstName = getFirstName(elm.fullname);
-    //student.middelName = getMiddelName(elm.fullname);
+    student.middelName = getMiddelName(elm.fullname);
     //student.lastName = getLastName(elm.fullname);
     //student.nickName = getNickName(elm.fullname);
     //student.house = getHouse(elm.fullname);
@@ -55,7 +55,7 @@ function prepareObjects(jsonData) {
 console.log(allStudents);
 
 function getFirstName(fullname) {
-  console.log("fullname");
+  console.log("getFirstName");
   if (fullname.includes(" ")) {
     firstName = fullname.trimStart();
     firstName = firstName.substring(0, firstName.indexOf(" "));
@@ -63,4 +63,21 @@ function getFirstName(fullname) {
     firstName = fullname;
   }
   return firstName;
+}
+
+function getMiddelName(fullname) {
+  // MANGLER AT SORTERER NICKNAMES FRA
+
+  console.log("getMiddelName");
+  middelName = fullname.trimStart();
+  middelName = middelName.split(" ");
+  if (middelName.length > 2) {
+    console.log("Har et mellemnavn");
+    middelName = middelName[1];
+  } else {
+    console.log("Har ikke et mellemnavn");
+    middelName = "undefined";
+  }
+
+  console.log(middelName);
 }
