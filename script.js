@@ -43,7 +43,7 @@ function prepareObjects(jsonData) {
     const student = Object.create(Student);
     student.firstName = getFirstName(elm.fullname);
     student.middelName = getMiddelName(elm.fullname);
-    //student.lastName = getLastName(elm.fullname);
+    student.lastName = getLastName(elm.fullname);
     //student.nickName = getNickName(elm.fullname);
     //student.house = getHouse(elm.fullname);
     allStudents.push(student);
@@ -55,7 +55,7 @@ function prepareObjects(jsonData) {
 console.log(allStudents);
 
 function getFirstName(fullname) {
-  console.log("getFirstName");
+  //console.log("getFirstName");
   if (fullname.includes(" ")) {
     firstName = fullname.trimStart();
     firstName = firstName.substring(0, firstName.indexOf(" "));
@@ -63,12 +63,13 @@ function getFirstName(fullname) {
     firstName = fullname;
   }
   return firstName;
+  // console.log(firstName);
 }
 
 function getMiddelName(fullname) {
   // MANGLER AT SORTERER NICKNAMES FRA
 
-  console.log("getMiddelName");
+  // console.log("getMiddelName");
   middelName = fullname.trimStart();
   middelName = middelName.split(" ");
   if (middelName.length > 2) {
@@ -78,6 +79,15 @@ function getMiddelName(fullname) {
     console.log("Har ikke et mellemnavn");
     middelName = "undefined";
   }
+  return middelName;
+  //  console.log(middelName);
+}
 
-  console.log(middelName);
+function getLastName(fullname) {
+  console.log("getLastName");
+  console.log(fullname);
+  //lastName = fullname.substring(fullname.indexOf(" ") + 1, fullname.lastIndexOf(" "));
+  lastName = fullname.substring(fullname.lastIndexOf(" ") + 1);
+  console.log(lastName);
+  return lastName;
 }
