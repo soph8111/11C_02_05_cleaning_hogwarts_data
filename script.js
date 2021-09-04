@@ -1,9 +1,16 @@
 "use strict";
 
+// I had problems finding:
+// - the first letter after an hypen
+// - finde the complete correct path to the images
+// - fjerne "ernie" som middelname
+
 window.addEventListener("DOMContentLoaded", start);
 
+// Opretter array til hvor alle studerende skal ned i, efter de er blevet rettet til
 const allStudents = [];
 
+// Laver en skabelon til hvad hver studerende skal indholde
 const Student = {
   firstName: "",
   middelName: "",
@@ -13,6 +20,7 @@ const Student = {
   image: "",
 };
 
+// Opretter variablerne så de er globale og kan kaldes fra flere funktioner
 let firstName;
 let middelName;
 let lastName;
@@ -29,6 +37,7 @@ function start() {
 function loadJSON() {
   console.log("loadJSON");
 
+  // Henter json med fetch
   fetch("https://petlatkea.dk/2021/hogwarts/students.json")
     .then((response) => response.json())
     .then((jsonData) => {
@@ -40,7 +49,7 @@ function loadJSON() {
 function prepareObjects(jsonData) {
   jsonData.forEach((elm) => {
     // console.log(elm);
-    // Create new object with cleaned data - and store that in the allStudents array
+    // Create new object with cleaned data - and store that in the allStudents array (kalder funktioner, så hvert navn kan bearbejdes der)
     const student = Object.create(Student);
     student.firstName = getFirstName(elm.fullname);
     student.middelName = getMiddelName(elm.fullname);
@@ -51,6 +60,7 @@ function prepareObjects(jsonData) {
     allStudents.push(student);
   });
 
+  // Retter efterfølgende bogstaverne til. Mon det kunne gøres inden?
   changeLetters();
   //displayList();
 }
@@ -59,8 +69,11 @@ console.log(allStudents);
 
 function getFirstName(fullname) {
   //console.log("getFirstName");
+  // Sørger for at der ikke er nogle navne der har mellemrum inden
+  firstName = fullname.trimStart();
+
+  // If-sætning, da en af eleverne kun har ét navn
   if (fullname.includes(" ")) {
-    firstName = fullname.trimStart();
     firstName = firstName.substring(0, firstName.indexOf(" "));
   } else {
     firstName = fullname;
@@ -73,12 +86,17 @@ function getMiddelName(fullname) {
   // MANGLER AT SORTERER NICKNAMES FRA
 
   // console.log("getMiddelName");
-  middelName = fullname.trimStart();
+  // Fjerner overflødige mellemrum, så mellemrummene ikke får en plads i arrayet
+  middelName = fullname.trim();
+  // Deler det fulde navn op i array, så hvert navn får deres egen plads i arrayet
   middelName = middelName.split(" ");
 
+  // Hvis arrayet har mere end to navne, så skal navn nr.2 (plads nr. 0 i arrayet) blive til mellemnavnet. Hvis ikke, så bliver mellemnavnet til "undefined"
   if (middelName.length > 2) {
     // console.log("Har et mellemnavn");
     middelName = middelName[1];
+    //   } else if (fullname.indexOf(` "`) >= 0) {
+    //     middelName = "undefined";
   } else {
     //  console.log("Har ikke et mellemnavn");
     middelName = "undefined";
@@ -91,14 +109,19 @@ function getMiddelName(fullname) {
 function getLastName(fullname) {
   //console.log("getLastName");
   // console.log(fullname);
-  lastName = fullname.substring(fullname.lastIndexOf(" ") + 1);
+  // fjerner overflødige mellemrum
+  lastName = fullname.trim();
+  // efternavnet skal være lig med det der kommer efter det sidste mellemrum i det fulde navn
+  lastName = lastName.substring(lastName.lastIndexOf(" ") + 1);
   //  console.log(lastName);
   return lastName;
 }
 
 function getNickName(fullname) {
+  //console.log("getNickName");
   nickName = fullname.split(" ");
 
+  // Hvis et navn indeholder ", så vil værdien være større end 0 (dvs. true), og dermed skal nickname være lig med navn nr. 2
   if (fullname.indexOf(` "`) >= 0) {
     nickName = nickName[1];
   } else {
@@ -109,7 +132,7 @@ function getNickName(fullname) {
 }
 
 function getImage(fullname) {
-  // billede = (efternavn)(_)(første bogstav i fornnavn)(.png)
+  // billede = (efternavn)(_)(første bogstav i fornnavn)(.png) - dog er det ikke den helt rigtige sti til alle billeder
   image = `./images/${lastName.toLowerCase()}_${firstName.substring(0, 1).toLowerCase()}.png`;
   return image;
 }
