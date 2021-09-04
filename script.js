@@ -99,7 +99,7 @@ function getMiddelName(fullname) {
     //     middelName = "undefined";
   } else {
     //  console.log("Har ikke et mellemnavn");
-    middelName = "undefined";
+    middelName = undefined;
   }
 
   return middelName;
@@ -125,7 +125,7 @@ function getNickName(fullname) {
   if (fullname.indexOf(` "`) >= 0) {
     nickName = nickName[1];
   } else {
-    nickName = "undefined";
+    nickName = undefined;
   }
 
   return nickName;
@@ -140,7 +140,7 @@ function getImage(fullname) {
 function changeLetters() {
   allStudents.forEach((student) => {
     student.firstName = student.firstName.substring(0, 1).toUpperCase() + student.firstName.substring(1).toLowerCase();
-    student.middelName = student.middelName.substring(0, 1).toUpperCase() + student.middelName.substring(1).toLowerCase();
+    student.middelName = student.middelName.substring(0, 1).toUpperCase() + student.middelName.substring(1).toLowerCase(); // Cannot read property 'substring' of undefined
     student.lastName = student.lastName.substring(0, 1).toUpperCase() + student.lastName.substring(1).toLowerCase();
     //let findHypen = student.lastName.substring(student.lastName.indexOf("-") + 1);
     //console.log(findHypen.substring(0, 1).toUpperCase() + findHypen.substring(1).toLowerCase());
