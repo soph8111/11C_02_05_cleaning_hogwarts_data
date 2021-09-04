@@ -45,7 +45,7 @@ function prepareObjects(jsonData) {
     student.firstName = getFirstName(elm.fullname);
     student.middelName = getMiddelName(elm.fullname);
     student.lastName = getLastName(elm.fullname);
-    // student.nickName = getNickName(elm.fullname);
+    student.nickName = getNickName(elm.fullname);
     student.house = elm.house;
     student.image = getImage(elm.fullname);
     allStudents.push(student);
@@ -96,16 +96,17 @@ function getLastName(fullname) {
   return lastName;
 }
 
-// function getNickName(fullname) {
-//   nickName = fullname.split(" ");
-//   if (nickName.indexOf(`"`) === "0") {
-//     nickName = nickName[1];
-//   } else {
-//     nickName = "undefined";
-//   }
+function getNickName(fullname) {
+  nickName = fullname.split(" ");
 
-//   return nickName;
-// }
+  if (fullname.indexOf(` "`) >= 0) {
+    nickName = nickName[1];
+  } else {
+    nickName = "undefined";
+  }
+
+  return nickName;
+}
 
 function getImage(fullname) {
   // billede = (efternavn)(_)(første bogstav i fornnavn)(.png)
@@ -118,7 +119,8 @@ function changeLetters() {
     student.firstName = student.firstName.substring(0, 1).toUpperCase() + student.firstName.substring(1).toLowerCase();
     student.middelName = student.middelName.substring(0, 1).toUpperCase() + student.middelName.substring(1).toLowerCase();
     student.lastName = student.lastName.substring(0, 1).toUpperCase() + student.lastName.substring(1).toLowerCase();
-    // student.lastName.substring(student.lastName.indexOf("-") + 1).toUpperCase();
+    //let findHypen = student.lastName.substring(student.lastName.indexOf("-") + 1);
+    //console.log(findHypen.substring(0, 1).toUpperCase() + findHypen.substring(1).toLowerCase());
     student.house = student.house.trim();
     student.house = student.house.substring(0, 1).toUpperCase() + student.house.substring(1).toLowerCase();
   });
