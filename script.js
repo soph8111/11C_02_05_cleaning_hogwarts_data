@@ -10,7 +10,7 @@ const Student = {
   lastName: "",
   nickName: "",
   house: "",
-  //image: "",
+  image: "",
 };
 
 let firstName;
@@ -18,6 +18,7 @@ let middelName;
 let lastName;
 let nickName;
 let house;
+let image;
 
 function start() {
   console.log("start");
@@ -44,8 +45,9 @@ function prepareObjects(jsonData) {
     student.firstName = getFirstName(elm.fullname);
     student.middelName = getMiddelName(elm.fullname);
     student.lastName = getLastName(elm.fullname);
-    //student.nickName = getNickName(elm.fullname);
+    // student.nickName = getNickName(elm.fullname);
     student.house = elm.house;
+    student.image = getImage(elm.fullname);
     allStudents.push(student);
   });
 
@@ -104,6 +106,12 @@ function getLastName(fullname) {
 
 //   return nickName;
 // }
+
+function getImage(fullname) {
+  // billede = (efternavn)(_)(første bogstav i fornnavn)(.png)
+  image = `./images/${lastName.toLowerCase()}_${firstName.substring(0, 1).toLowerCase()}.png`;
+  return image;
+}
 
 function changeLetters() {
   allStudents.forEach((student) => {
